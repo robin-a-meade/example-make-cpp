@@ -1,10 +1,3 @@
-/*
- *          File: Rectangle.cpp
- * Last Modified: January 31, 2000
- *         Topic: Modules, Separate Compilation, Using Make Files
- * ----------------------------------------------------------------
- */
-
 #include "Rectangle.h"
 
 Rectangle::Rectangle()

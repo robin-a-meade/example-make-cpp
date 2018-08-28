@@ -1,12 +1,4 @@
-/*
- *          File: Point.h
- * Last Modified: January 31, 2000
- *         Topic: Modules, Separate Compilation, Using Make Files
- * ----------------------------------------------------------------
- */
-
-class Point
-{
+class Point {
 public:
   Point();
   Point(int xval, int yval);

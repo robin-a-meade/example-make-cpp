@@ -1,10 +1,3 @@
-/*
- *          File: main.cpp
- * Last Modified: January 31, 2000
- *         Topic: Modules, Separate Compilation, Using Make Files
- * ----------------------------------------------------------------
- */
-
 #include <iostream.h>
 #include "Point.h"
 #include "Rectangle.h"

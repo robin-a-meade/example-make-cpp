@@ -1,10 +1,3 @@
-/*
- *          File: Rectangle.h
- * Last Modified: January 31, 2000
- *         Topic: Modules, Separate Compilation, Using Make Files
- * ----------------------------------------------------------------
- */
-
 #ifndef _RECTANGLE_H
 #define _RECTANGLE_H
 
