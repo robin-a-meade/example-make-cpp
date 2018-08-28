@@ -46,4 +46,4 @@ $(executable): $(OBJ)
 clean:
 	rm -f $(OBJ) $(DEP) $(executable)
 
--include include $(DEP)
+-include $(DEP)
