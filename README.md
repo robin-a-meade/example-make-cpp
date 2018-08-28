@@ -66,14 +66,14 @@ clean:
 
 ## Use the C++ Linker
 
-The problem and possible solutions are described the following links:
+The problem and possible solutions are described in the following links:
 
 * https://lists.gnu.org/archive/html/help-make/2012-01/msg00058.html
 * https://stackoverflow.com/a/13375395
 * https://stackoverflow.com/a/29936672
 * https://stackoverflow.com/a/33665503
 
-The problem is that both C and C++ source files compile to object files having the same file extension, `.o`. So how is make to know to use the C++ linker for linking these .o files into the final executable? (Apparently, the C linker can be used as well, the (only?) difference being that the C++ linker includes the C++ standard library, which is almost always needed in any C++ program.) There are many solutions offered in the above discussions. The following solution is most in alignment with the default rules and variables. The default rules define a C++ linker rule in variable `LINK.cc`. (Also aliased as `LINK.cpp`, if you prefer.) So use it:
+The problem is that both C and C++ source files compile to object files having the same file extension, `.o`. So how is `make` to know to use the C++ linker for linking these `.o' files into the final executable? (Apparently, the C linker can be used as well, the (only?) difference being that the C++ linker includes the C++ standard library, which is almost always needed in any C++ program.) There are many solutions offered in the above discussions. The following solution is most in alignment with the default rules and variables. The default rules define a C++ linker rule in variable `LINK.cc`. (Also aliased as `LINK.cpp`, if you prefer.) So use it:
 
 ```
 LINK.o = $(LINK.cc)
@@ -102,7 +102,7 @@ main.o : main.cpp Point.h Rectangle.h
 Writing such rules is tedious and error prone. Fortunately, modern C and C++ compilers can write these rules 
 for us by looking at the `#include` lines in the source files. That is what is meant by _Automatic dependency generation_.
 
-What options do we need to instruct the compiler to create these rules, and in what variable should we put these options?
+What flags do we need to give the compiler to instruct it to create these rules, and in what variable should we put these flags?
 
 ### Research
 
