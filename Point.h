@@ -1,3 +1,6 @@
+#ifndef _POINT_H
+#define _POINT_H
+
 class Point {
 public:
   Point();
@@ -10,3 +13,5 @@ private:
   int x;
   int y;
 };
+
+#endif
