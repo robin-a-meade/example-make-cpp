@@ -99,7 +99,7 @@ To capture these dependency relationships, you'd need to add rules like:
 main.o : main.cpp Point.h Rectangle.h
 ```
 
-(Note we didn't include `iostream.h`. This's because that is a system header file, and, therefore, wouldn't be expected to change.)
+(Note we didn't include `iostream.h`. That's because that is a system header file, and, therefore, wouldn't be expected to change.)
 
 Writing such rules is tedious and error prone. Fortunately, modern C and C++ compilers can write these rules 
 for us by looking at the `#include` lines in the source files. That is what is meant by _Automatic dependency generation_.
