@@ -8,17 +8,27 @@ executable := main
 # https://stackoverflow.com/a/13375395
 # https://stackoverflow.com/a/29936672
 # https://stackoverflow.com/a/33665503
-# This solution fits best with the default variables and rules:
+# The problem is that both C and C++ source files compile to object files 
+# having the same file extension, `.o`. So how is make to know to use the 
+# C++ linker for linking these .o files into the final executable? (Apparently, 
+# the C linker can be used as well, the (only?) difference being that the C++ 
+# linker includes the C++ standard library, which is almost always needed in 
+# any C++ program.) There are many solutions offered in the above discussions. 
+# The following solution is most in alignment with the default rules and 
+# variables. The default rules define a C++ linker rule in variable `LINK.cc`. 
+# (Also aliased as `LINK.cpp`, if you prefer.) So use it:
 LINK.o = $(LINK.cc)
 
-# C preprocessor (CPP) flags for auto dependencies
+# C preprocessor flags for automatic dependency rule generation
+# for included files
 # https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
 # https://stackoverflow.com/a/12857539
 # https://bruno.defraine.net/techtips/makefile-auto-dependencies-with-gcc/
 # http://www.microhowto.info/howto/automatically_generate_makefile_dependencies.html
-# -MMD generate dependency files for included files, but not system header files
-# -MP is recommended to workaround errors that would occur if you remove header
-#  files without updating the Makefile to match
+# -MMD generate dependency files for included files, 
+#  but not for system header files
+# -MP is recommended to workaround errors that would happen 
+#  if you remove header files 
 CPPFLAGS += -MMD -MP
 
 # You'll probably want to set some CXXFLAGS too.
