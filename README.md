@@ -1,5 +1,7 @@
 # Makefile for basic C++ project, with automatic dependency rule generation for included files
 
+A small C++ project is included to test the Makefile.
+
 ## Makefile
 
 ```
