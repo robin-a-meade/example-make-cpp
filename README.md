@@ -73,7 +73,7 @@ The problem and possible solutions are described in the following links:
 * https://stackoverflow.com/a/29936672
 * https://stackoverflow.com/a/33665503
 
-The problem is that both C and C++ source files compile to object files having the same file extension, `.o`. So how is `make` to know to use the C++ linker for linking these `.o' files into the final executable? (Apparently, the C linker can be used as well, the (only?) difference being that the C++ linker includes the C++ standard library, which is almost always needed in any C++ program.) There are many solutions offered in the above discussions. The following solution is most in alignment with the default rules and variables. The default rules define a C++ linker rule in variable `LINK.cc`. (Also aliased as `LINK.cpp`, if you prefer.) So use it:
+The problem is that both C and C++ source files compile to object files having the same file extension, `.o`. So how is `make` to know to use the C++ linker for linking these `.o` files into the final executable? (Apparently, the C linker can be used as well, the (only?) difference being that the C++ linker includes the C++ standard library, which is almost always needed in any C++ program.) There are many solutions offered in the above discussions. The following solution is most in alignment with the default rules and variables. The default rules define a C++ linker rule in variable `LINK.cc`. (Also aliased as `LINK.cpp`, if you prefer.) So use it:
 
 ```
 LINK.o = $(LINK.cc)
