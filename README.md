@@ -153,10 +153,8 @@ within a makefile is to append them to `CPPFLAGS`:
 
 Sometimes CPP means C++, but in the case of CPPFLAGS, it means C PreProcessor.
 
-<<<
-CPPFLAGS is supposed to be for flags for the C PreProcessor; CXXFLAGS is for flags for the C++ compiler.
-
-<<< [[https://stackoverflow.com/a/495646/1157557]]
+> CPPFLAGS is supposed to be for flags for the C PreProcessor; CXXFLAGS is for flags for the C++ compiler.
+> <br>https://stackoverflow.com/a/495646/1157557
 
 ## Tip: Show make's variables and rules
 You can get make to print out its variables and rules database using the invocation `make -p`
