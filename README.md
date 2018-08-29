@@ -23,7 +23,7 @@ executable := main
 # any C++ program.) There are many solutions offered in the above discussions. 
 # The following solution is most in alignment with the default rules and 
 # variables. The default rules define a C++ linker rule in variable `LINK.cc`. 
-# (Also aliased as `LINK.cpp`, if you prefer.) So use it:
+# (The `LINK.cpp` variable is equivalent, if you prefer.) So use it:
 LINK.o = $(LINK.cc)
 
 # C preprocessor flags for automatic dependency rule generation
