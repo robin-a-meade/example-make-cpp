@@ -15,8 +15,10 @@ executable := main
 # linker includes the C++ standard library, which is almost always needed in 
 # any C++ program.) There are many solutions offered in the above discussions. 
 # The following solution is most in alignment with the default rules and 
-# variables. The default rules define a C++ linker rule in variable `LINK.cc`. 
-# (The `LINK.cpp` variable is equivalent, if you prefer.) So use it:
+# variables. The default linker recipe invokes the linker defined in variable 
+# `LINK.o`. Also availble is variable `LINK.cc` which references the C++ compiler, 
+# as we want. (The `LINK.cpp` variable is equivalent, if you prefer.)
+# It has conveniently been made available for our use, so use it:
 LINK.o = $(LINK.cc)
 
 # C preprocessor flags for automatic dependency rule generation
