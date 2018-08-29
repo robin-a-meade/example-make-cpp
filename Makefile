@@ -1,7 +1,16 @@
-# The target executable file name must correspond to a C++ source
-# file that has a public main method with proper signature, but without the
+# The target executable filename should correspond to a C++ source
+# file that has a public main function with proper signature, sans the
 # 'cpp' file extension.  Otherwise, the implicit rules won't build it.
-executable := main
+# In the case of our sample project, it is main.cpp that contains
+# the main function. Thus our executable should be named 'main'.
+# We use a variable to hold this name, because it is referred to multiple
+# times, and we try to follow the DRY principle. The variable name
+# 'appfilename' is not significant. You could name it something else, like
+# 'appname' or 'executable', if you wish.
+cpp_file_with_main_function=main.cpp
+# Use substitution reference to remove the .cpp file extension
+# https://www.gnu.org/software/make/manual/make.html#Substitution-Refs
+appfilename=$(cpp_file_with_main_function:.cpp=)
 
 # Use the C++ linker
 # https://lists.gnu.org/archive/html/help-make/2012-01/msg00058.html
@@ -52,10 +61,10 @@ DEP := $(SRC:.cpp=.d)
 
 # The default goal is the target of the first rule in the makefile
 # https://www.gnu.org/software/make/manual/html_node/Rules.html
-$(executable): $(OBJ)
+$(appfilname): $(OBJ)
 
 .PHONY: clean
 clean:
-	rm -f $(OBJ) $(DEP) $(executable)
+	rm -f $(OBJ) $(DEP) $(appfilename)
 
 -include $(DEP)
