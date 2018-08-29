@@ -10,14 +10,13 @@ A small C++ project is included to test the Makefile.
 # 'cpp' file extension.  Otherwise, the implicit rules won't build it.
 # In the case of our sample project, it is main.cpp that contains
 # the main function. Thus our executable should be named 'main'.
-# We use a variable to hold this name, because it is referred to multiple
-# times, and we try to follow the DRY principle. The variable name
-# 'appfilename' is not significant. You could name it something else, like
-# 'appname' or 'executable', if you wish.
+# We introduce a variable, executable_file, to hold this name, because 
+# it is referred to multiple times, and we try to follow the DRY principle. 
 cpp_file_with_main_function=main.cpp
+
 # Use substitution reference to remove the .cpp file extension
 # https://www.gnu.org/software/make/manual/make.html#Substitution-Refs
-appfilename=$(cpp_file_with_main_function:.cpp=)
+executable_file=$(cpp_file_with_main_function:.cpp=)
 
 # Use the C++ linker
 # https://lists.gnu.org/archive/html/help-make/2012-01/msg00058.html
@@ -32,10 +31,25 @@ appfilename=$(cpp_file_with_main_function:.cpp=)
 # any C++ program.) There are many solutions offered in the above discussions. 
 # The following solution is most in alignment with the default rules and 
 # variables. The default linker recipe invokes the linker defined in variable 
-# `LINK.o`. Also availble is variable `LINK.cc` which references the C++ compiler, 
-# as we want. (The `LINK.cpp` variable is equivalent, if you prefer.)
-# It has conveniently been made available for our use, so use it:
+# `LINK.o`. 
+#
+# %: %.o
+#       $(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
+#
+# (Invoke: `make -p` to see default rules, recipes, and variables)
+#
+# LINK.o uses the C compiler, but, since this is a C++ project, it would
+# be better to use the C++ compiler, for reasons including the fact that
+# doing so will include the C++ standard library, which is needed by almost
+# any C++ project.
+#
+# Fortunately, an another default variable, `LINK.cc`, is defined, which
+# uses the C++ compiler. To use it in the default linker recipe, 
+# we need to redefine LINK.o to have the value of LINK.cc.
+
 LINK.o = $(LINK.cc)
+
+# (LINK.cpp aliases LINK.cc, so use that if you prefer.)
 
 # C preprocessor flags for automatic dependency rule generation
 # for included files
@@ -68,11 +82,11 @@ DEP := $(SRC:.cpp=.d)
 
 # The default goal is the target of the first rule in the makefile
 # https://www.gnu.org/software/make/manual/html_node/Rules.html
-$(appfilname): $(OBJ)
+$(executable_file): $(OBJ) 
 
 .PHONY: clean
 clean:
-	rm -f $(OBJ) $(DEP) $(appfilename)
+	rm -f $(OBJ) $(DEP) $(executable_file)
 
 -include $(DEP)
 ```
@@ -86,7 +100,7 @@ The problem and possible solutions are described in the following links:
 * https://stackoverflow.com/a/29936672
 * https://stackoverflow.com/a/33665503
 
-The problem is that both C and C++ source files compile to object files having the same file extension, `.o`. So how is `make` to know to use the C++ linker for linking these `.o` files into the final executable? (Apparently, the C linker can be used as well, the (only?) difference being that the C++ linker includes the C++ standard library, which is almost always needed in any C++ program.) There are many solutions offered in the above discussions. We prefer a solution that leverages the default rules to the extent possible.
+The problem is that both C and C++ source files compile to object files having the same file extension, `.o`. So how is `make` to know to use the C++ linker for linking these `.o` files into the final executable? (Apparently, the C linker can be used as well, the (only?) difference being that the C++ linker includes the C++ standard library, which is almost always needed in any C++ program.) There are many solutions offered in the above discussions. We prefer a solution that leverages the default rules.
 
 Print the default database of rules, recipes, and variables:
 
@@ -106,7 +120,7 @@ LINK.cpp = $(LINK.cc)
 
 ```
 
-We see that the recipe for the rule that goes from an object file (`.o` extension) to an executable (no extension) invokes the command contained in the variable `LINK.o`.
+We see that the recipe for the rule that transforms from an object file (`.o` extension) into an executable (no extension) invokes the command contained in the variable `LINK.o`.
 
 The default definition of `LINK.o` uses the C compiler. But, as explained earlier, it's preferable to use the C++ compiler for this. Fortunately, we see there's another default variable available to us, `LINK.cc`, containing the definition we need. (Identically valued `LINK.cpp` variable is also available, if you prefer.) 
 
