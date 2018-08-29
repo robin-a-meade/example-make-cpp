@@ -75,7 +75,7 @@ The problem and possible solutions are described in the following links:
 * https://stackoverflow.com/a/29936672
 * https://stackoverflow.com/a/33665503
 
-The problem is that both C and C++ source files compile to object files having the same file extension, `.o`. So how is `make` to know to use the C++ linker for linking these `.o` files into the final executable? (Apparently, the C linker can be used as well, the (only?) difference being that the C++ linker includes the C++ standard library, which is almost always needed in any C++ program.) There are many solutions offered in the above discussions. We prefer a solution that leverages the default rules and recipes.
+The problem is that both C and C++ source files compile to object files having the same file extension, `.o`. So how is `make` to know to use the C++ linker for linking these `.o` files into the final executable? (Apparently, the C linker can be used as well, the (only?) difference being that the C++ linker includes the C++ standard library, which is almost always needed in any C++ program.) There are many solutions offered in the above discussions. We prefer a solution that leverages the default rules to the extent possible.
 
 Print the default data base of rules, recipes, and variables:
 
@@ -97,9 +97,9 @@ LINK.cpp = $(LINK.cc)
 
 We see that recipe for the rule that goes from an object file to an executable (without any extension) invokes the command contained in the variable `LINK.o`.
 
-The default definition of `LINK.o` uses the C compiler. But, as explained above, we prefer to use the C++ compiler for this. Fortunately, we see there's another default variable available to us, `LINK.cc`, containing the definition we need. (Identically valued `LINK.cpp` variable is also available, if you prefer.) 
+The default definition of `LINK.o` uses the C compiler. But, as explained earlier, we prefer to use the C++ compiler for this. Fortunately, we see there's another default variable available to us, `LINK.cc`, containing the definition we need. (Identically valued `LINK.cpp` variable is also available, if you prefer.) 
 
-To make use of it, we use its value for the `LINK.o` variable:
+To make use of it, we use its value to redefine the `LINK.o` variable:
 
 ```
 $ make -p
