@@ -42,7 +42,14 @@ executable_file=$(cpp_file_with_main_function:.cpp=)
 
 LINK.o = $(LINK.cc)
 
-# (LINK.cpp aliases LINK.cc, so use that if you prefer.)
+# LINK.cpp aliases LINK.cc, so use that if you prefer.
+#
+# Aside: .cpp vs .cc
+# Different communities prefer different file extension for C++ files.
+# The .cpp extension is believed to have started at Microsoft.
+# It seems the .cc extension is more popular in Unix culture.
+# https://www.quora.com/Why-do-both-cc-and-cpp-file-extensions-exist-for-C-Whats-the-history-behind-this
+# https://stackoverflow.com/q/18590135
 
 # C preprocessor flags for automatic dependency rule generation
 # for included files
@@ -81,4 +88,6 @@ $(executable_file): $(OBJ)
 clean:
 	rm -f $(OBJ) $(DEP) $(executable_file)
 
+# Putting a hyphen in front of the include directive quiesces warning messages when the .d files don't exist.
+# https://clarkgrubb.com/makefile-style-guide
 -include $(DEP)
