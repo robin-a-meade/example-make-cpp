@@ -5,11 +5,11 @@
 # the main function. Thus our executable should be named 'main'.
 # We introduce a variable, executable_file, to hold this name, because
 # it is referred to multiple times, and we try to follow the DRY principle.
-source_file_with_main_function=main.cc
+source_file_with_main_function := main.cc
 
 # Use substitution reference to remove the .cc file extension
 # https://www.gnu.org/software/make/manual/make.html#Substitution-Refs
-executable_file=$(source_file_with_main_function:.cc=)
+executable_file := $(source_file_with_main_function:.cc=)
 
 # GNU Make has debug, info, and error "control functions"
 # https://www.gnu.org/software/make/manual/html_node/Make-Control-Functions.html
@@ -46,7 +46,7 @@ $(info The executable file is $(executable_file))
 # uses the C++ compiler. To use it in the default linker recipe,
 # we need to redefine LINK.o to have the value of LINK.cc.
 
-LINK.o = $(LINK.cc)
+LINK.o := $(LINK.cc)
 
 # LINK.cpp aliases LINK.cc, so use that if you prefer.
 #
@@ -84,7 +84,7 @@ CPPFLAGS += -MMD -MP
 #  -Wall       Turns on many warning flags
 #  -Wextra     Turns on extra warning flags
 #  -g          Produce debugging information
-CXXFLAGS = -std=c++11 -Wpedantic -Wall -Wextra -g
+CXXFLAGS := -std=c++11 -Wpedantic -Wall -Wextra -g
 
 SRC := $(wildcard *.cc)
 OBJ := $(SRC:.cc=.o)
