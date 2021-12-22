@@ -50,6 +50,7 @@ LINK.o = $(LINK.cc)
 # It seems the .cc extension is more popular in Unix culture.
 # https://www.quora.com/Why-do-both-cc-and-cpp-file-extensions-exist-for-C-Whats-the-history-behind-this
 # https://stackoverflow.com/q/18590135
+# https://retrocomputing.stackexchange.com/q/20281
 
 # C preprocessor flags for automatic dependency rule generation
 # for included files
