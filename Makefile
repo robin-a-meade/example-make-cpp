@@ -3,8 +3,8 @@
 # 'cpp' file extension.  Otherwise, the implicit rules won't build it.
 # In the case of our sample project, it is main.cpp that contains
 # the main function. Thus our executable should be named 'main'.
-# We introduce a variable, executable_file, to hold this name, because 
-# it is referred to multiple times, and we try to follow the DRY principle. 
+# We introduce a variable, executable_file, to hold this name, because
+# it is referred to multiple times, and we try to follow the DRY principle.
 cpp_file_with_main_function=main.cpp
 
 # Use substitution reference to remove the .cpp file extension
@@ -16,15 +16,15 @@ executable_file=$(cpp_file_with_main_function:.cpp=)
 # https://stackoverflow.com/a/13375395
 # https://stackoverflow.com/a/29936672
 # https://stackoverflow.com/a/33665503
-# The problem is that both C and C++ source files compile to object files 
-# having the same file extension, `.o`. So how is make to know to use the 
-# C++ linker for linking these .o files into the final executable? (Apparently, 
-# the C linker can be used as well, the (only?) difference being that the C++ 
-# linker includes the C++ standard library, which is almost always needed in 
-# any C++ program.) There are many solutions offered in the above discussions. 
-# The following solution is most in alignment with the default rules and 
-# variables. The default linker recipe invokes the linker defined in variable 
-# `LINK.o`. 
+# The problem is that both C and C++ source files compile to object files
+# having the same file extension, `.o`. So how is make to know to use the
+# C++ linker for linking these .o files into the final executable? (Apparently,
+# the C linker can be used as well, the (only?) difference being that the C++
+# linker includes the C++ standard library, which is almost always needed in
+# any C++ program.) There are many solutions offered in the above discussions.
+# The following solution is most in alignment with the default rules and
+# variables. The default linker recipe invokes the linker defined in variable
+# `LINK.o`.
 #
 # %: %.o
 #       $(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
@@ -37,7 +37,7 @@ executable_file=$(cpp_file_with_main_function:.cpp=)
 # any C++ project.
 #
 # Fortunately, an another default variable, `LINK.cc`, is defined, which
-# uses the C++ compiler. To use it in the default linker recipe, 
+# uses the C++ compiler. To use it in the default linker recipe,
 # we need to redefine LINK.o to have the value of LINK.cc.
 
 LINK.o = $(LINK.cc)
@@ -50,14 +50,14 @@ LINK.o = $(LINK.cc)
 # https://stackoverflow.com/a/12857539
 # https://bruno.defraine.net/techtips/makefile-auto-dependencies-with-gcc/
 # http://www.microhowto.info/howto/automatically_generate_makefile_dependencies.html
-# -MMD generate dependency files for included files, 
+# -MMD generate dependency files for included files,
 #  but not for system header files
-# -MP is recommended to workaround errors that would happen 
-#  if you remove header files 
+# -MP is recommended to workaround errors that would happen
+#  if you remove header files
 CPPFLAGS += -MMD -MP
 
 # You'll probably want to set some CXXFLAGS too.
-# This variable is for extra flags to give to the C++ compiler. 
+# This variable is for extra flags to give to the C++ compiler.
 # https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html
 # https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
 # https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html
@@ -75,7 +75,7 @@ DEP := $(SRC:.cpp=.d)
 
 # The default goal is the target of the first rule in the makefile
 # https://www.gnu.org/software/make/manual/html_node/Rules.html
-$(executable_file): $(OBJ) 
+$(executable_file): $(OBJ)
 
 .PHONY: clean
 clean:
