@@ -1,15 +1,21 @@
 # The target executable filename should correspond to a C++ source
 # file that has a public main function with proper signature, sans the
-# 'cpp' file extension.  Otherwise, the implicit rules won't build it.
-# In the case of our sample project, it is main.cpp that contains
+# 'cc' file extension.  Otherwise, the implicit rules won't build it.
+# In the case of our sample project, it is main.cc that contains
 # the main function. Thus our executable should be named 'main'.
 # We introduce a variable, executable_file, to hold this name, because
 # it is referred to multiple times, and we try to follow the DRY principle.
-cpp_file_with_main_function=main.cpp
+source_file_with_main_function=main.cc
 
-# Use substitution reference to remove the .cpp file extension
+# Use substitution reference to remove the .cc file extension
 # https://www.gnu.org/software/make/manual/make.html#Substitution-Refs
-executable_file=$(cpp_file_with_main_function:.cpp=)
+executable_file=$(source_file_with_main_function:.cc=)
+
+# GNU Make has debug, info, and error "control functions"
+# https://www.gnu.org/software/make/manual/html_node/Make-Control-Functions.html
+# https://stackoverflow.com/a/16489377
+# Here's an example of using info:
+$(info The executable file is $(executable_file))
 
 # Use the C++ linker
 # https://lists.gnu.org/archive/html/help-make/2012-01/msg00058.html
@@ -51,6 +57,9 @@ LINK.o = $(LINK.cc)
 # https://www.quora.com/Why-do-both-cc-and-cpp-file-extensions-exist-for-C-Whats-the-history-behind-this
 # https://stackoverflow.com/q/18590135
 # https://retrocomputing.stackexchange.com/q/20281
+# Google C++ Style Guide uses .cc file extension
+# https://google.github.io/styleguide/cppguide.html#File_Names
+# I like that because then CPP always means C Pre Processor, as in CPPFLAGS.
 
 # C preprocessor flags for automatic dependency rule generation
 # for included files
@@ -77,9 +86,9 @@ CPPFLAGS += -MMD -MP
 #  -g          Produce debugging information
 CXXFLAGS = -std=c++11 -Wpedantic -Wall -Wextra -g
 
-SRC := $(wildcard *.cpp)
-OBJ := $(SRC:.cpp=.o)
-DEP := $(SRC:.cpp=.d)
+SRC := $(wildcard *.cc)
+OBJ := $(SRC:.cc=.o)
+DEP := $(SRC:.cc=.d)
 
 # The default goal is the target of the first rule in the makefile
 # https://www.gnu.org/software/make/manual/html_node/Rules.html
